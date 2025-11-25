@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match Game</title>
+
+    <!-- CSS File Link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Start Screen -->
+    <div class="start-screen" id="startScreen">
+        <h1>Memory Match Game</h1>
+        <button id="startBtn">Start Game</button>
+    </div>
+
+    <!-- Level Selection Screen -->
+    <div class="level-screen hidden" id="levelScreen">
+        <h2>Select Level</h2>
+
+        <div class="levels">
+            <button class="level" data-level="easy">Easy</button>
+            <button class="level" data-level="medium">Medium</button>
+            <button class="level" data-level="hard">Hard</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div class="game-screen hidden" id="gameScreen">
+
+        <div class="info">
+            <p>Score: <span id="score">0</span></p>
+            <p>Time: <span id="time">30</span> sec</p>
+            <p>Matches: <span id="matches">0</span></p>
+        </div>
+
+        <!-- Board -->
+        <div id="board" class="board"></div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="pauseBtn">Pause</button>
+            <button id="restartBtn">Restart</button>
+            <button id="backBtn">Back</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="message" class="message hidden"></div>
+    </div>
+
+    <!-- SOUND FILES -->
+<audio id="s_flip" src="FLIP SOUND.wav" preload="auto"></audio>
+<audio id="s_match" src="MATCH SOUND.wav" preload="auto"></audio>
+<audio id="s_wrong" src="WRONG SOUND.wav" preload="auto"></audio>
+<audio id="s_win" src="WIN SOUND.wav" preload="auto"></audio>
+
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+
+</body>
+</html>
