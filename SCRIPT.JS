@@ -1,14 +1,11 @@
-// ----------------------------------
-//        SOUND ELEMENTS
-// ----------------------------------
+// SOUND ELEMENTS
 const flipSound = document.getElementById("s_flip");
 const matchSound = document.getElementById("s_match");
 const wrongSound = document.getElementById("s_wrong");
-const winSound = document.getElementById("s_win");
+const winSound = document.getElementById("s_win")
 
-// ----------------------------------
-//        SCREEN ELEMENTS
-// ----------------------------------
+    //    SCREEN ELEMENTS
+
 const startBtn = document.getElementById("startBtn");
 const startScreen = document.getElementById("startScreen");
 const levelScreen = document.getElementById("levelScreen");
@@ -24,9 +21,8 @@ const pauseBtn = document.getElementById("pauseBtn");
 const backBtn = document.getElementById("backBtn");
 const message = document.getElementById("message");
 
-// ----------------------------------
-//        GAME VARIABLES
-// ----------------------------------
+
+    //    GAME VARIABLES
 let score = 0;
 let timer = 30;
 let interval = null;
@@ -42,26 +38,24 @@ const levelConfig = {
     hard: 16
 };
 
-// ----------------------------------
-//        START BUTTON
-// ----------------------------------
+
+    //    START BUTTON
 startBtn.onclick = () => {
     startScreen.classList.add("hidden");
     levelScreen.classList.remove("hidden");
 };
 
-// ----------------------------------
-//        LEVEL SELECTION
-// ----------------------------------
+    //    LEVEL SELECTION
+
 document.querySelectorAll(".level").forEach(btn => {
     btn.addEventListener("click", () => {
         startGame(btn.dataset.level);
     });
 });
 
-// ----------------------------------
-//        START GAME
-// ----------------------------------
+
+    //    START GAME
+
 function startGame(level) {
     resetGame();
     levelScreen.classList.add("hidden");
@@ -72,9 +66,9 @@ function startGame(level) {
     startTimer();
 }
 
-// ----------------------------------
-//        RESET GAME
-// ----------------------------------
+
+    //    RESET GAME
+
 function resetGame() {
     score = 0;
     timer = 30;
@@ -92,9 +86,9 @@ function resetGame() {
     clearInterval(interval);
 }
 
-// ----------------------------------
-//       CREATE BOARD WITH ANIMATION
-// ----------------------------------
+
+    //   CREATE BOARD WITH ANIMATION
+
 function createBoard(total) {
     const arr = [];
 
@@ -125,9 +119,9 @@ function createBoard(total) {
     });
 }
 
-// ----------------------------------
-//         FLIP CARD
-// ----------------------------------
+
+        // FLIP CARD
+
 function flipCard(card) {
     if (isPaused) return;
     if (selected.length >= 2) return;
@@ -144,9 +138,9 @@ function flipCard(card) {
     }
 }
 
-// ----------------------------------
-//         CHECK MATCH
-// ----------------------------------
+
+        // CHECK MATCH
+
 function checkMatch() {
     const [c1, c2] = selected;
 
@@ -186,9 +180,9 @@ function checkMatch() {
     }
 }
 
-// ----------------------------------
-//             TIMER
-// ----------------------------------
+
+            // TIMER
+
 function startTimer() {
     clearInterval(interval);
 
@@ -206,9 +200,9 @@ function startTimer() {
     }, 1000);
 }
 
-// ----------------------------------
-//             SHUFFLE
-// ----------------------------------
+
+            // SHUFFLE
+
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -217,9 +211,8 @@ function shuffle(array) {
     return array;
 }
 
-// ----------------------------------
-//             CONTROLS
-// ----------------------------------
+
+            // CONTROLS
 pauseBtn.onclick = () => {
     isPaused = !isPaused;
     pauseBtn.textContent = isPaused ? "Resume" : "Pause";
