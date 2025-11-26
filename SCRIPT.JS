@@ -164,7 +164,8 @@ function checkMatch() {
             message.textContent = "🎉 Level Complete!";
             message.classList.remove("hidden");
             clearInterval(interval);
-        }
+        } 
+
 
     } else {
 
