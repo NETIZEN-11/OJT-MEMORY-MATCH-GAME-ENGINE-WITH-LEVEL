@@ -2,10 +2,9 @@
 const flipSound = document.getElementById("s_flip");
 const matchSound = document.getElementById("s_match");
 const wrongSound = document.getElementById("s_wrong");
-const winSound = document.getElementById("s_win")
+const winSound = document.getElementById("s_win");
 
-    //    SCREEN ELEMENTS
-
+// SCREEN ELEMENTS
 const startBtn = document.getElementById("startBtn");
 const startScreen = document.getElementById("startScreen");
 const levelScreen = document.getElementById("levelScreen");
@@ -21,8 +20,7 @@ const pauseBtn = document.getElementById("pauseBtn");
 const backBtn = document.getElementById("backBtn");
 const message = document.getElementById("message");
 
-
-    //    GAME VARIABLES
+// GAME VARIABLES
 let score = 0;
 let timer = 30;
 let interval = null;
@@ -30,33 +28,31 @@ let selected = [];
 let matchedCount = 0;
 let totalCards = 6;
 let isPaused = false;
+let currentLevel = "easy"; // 🔹 last selected level remember
 
-// Level configuration
+// Level configuration (TOTAL CARDS)
 const levelConfig = {
-    easy: 6,
-    medium: 12,
-    hard: 16
+    easy: 6,   // 3x2
+    medium: 12, // 4x3
+    hard: 16   // 4x4
 };
 
-
-    //    START BUTTON
+// START BUTTON
 startBtn.onclick = () => {
     startScreen.classList.add("hidden");
     levelScreen.classList.remove("hidden");
 };
 
-    //    LEVEL SELECTION
-
+// LEVEL SELECTION
 document.querySelectorAll(".level").forEach(btn => {
     btn.addEventListener("click", () => {
         startGame(btn.dataset.level);
     });
 });
 
-
-    //    START GAME
-
+// START GAME
 function startGame(level) {
+    currentLevel = level; // 🔹 store current level
     resetGame();
     levelScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
@@ -66,9 +62,7 @@ function startGame(level) {
     startTimer();
 }
 
-
-    //    RESET GAME
-
+// RESET GAME
 function resetGame() {
     score = 0;
     timer = 30;
@@ -86,27 +80,33 @@ function resetGame() {
     clearInterval(interval);
 }
 
-
-    //   CREATE BOARD WITH ANIMATION
-
+// CREATE BOARD
 function createBoard(total) {
     const arr = [];
 
+    // Proper PAIRS create karo
     for (let i = 1; i <= total / 2; i++) {
         arr.push(i, i);
     }
 
     const shuffled = shuffle(arr);
 
-    const cols = Math.sqrt(total);
+    // 🔹 FIXED GRID (no weird sqrt)
+    let cols;
+    if (total === 6) cols = 3;       // 3 x 2
+    else if (total === 12) cols = 4; // 4 x 3
+    else if (total === 16) cols = 4; // 4 x 4
+    else cols = Math.round(Math.sqrt(total)); // fallback
+
     board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    board.innerHTML = "";
 
     shuffled.forEach(value => {
         const card = document.createElement("div");
         card.className = "card";
         card.dataset.value = value;
 
-        // 3D flip structure added
+        // 3D flip structure
         card.innerHTML = `
            <div class="inner">
              <div class="front">?</div>
@@ -119,16 +119,17 @@ function createBoard(total) {
     });
 }
 
-
-        // FLIP CARD
-
+// FLIP CARD
 function flipCard(card) {
     if (isPaused) return;
+    if (timer <= 0) return; // 🔹 time over pe flip mat karo
     if (selected.length >= 2) return;
     if (card.classList.contains("flipped")) return;
 
-    flipSound.currentTime = 0;
-    flipSound.play();
+    if (flipSound) {
+        flipSound.currentTime = 0;
+        flipSound.play();
+    }
 
     card.classList.add("flipped");
     selected.push(card);
@@ -138,16 +139,15 @@ function flipCard(card) {
     }
 }
 
-
-        // CHECK MATCH
-
+// CHECK MATCH
 function checkMatch() {
     const [c1, c2] = selected;
 
     if (c1.dataset.value === c2.dataset.value) {
-        
-        matchSound.currentTime = 0;
-        matchSound.play();
+        if (matchSound) {
+            matchSound.currentTime = 0;
+            matchSound.play();
+        }
 
         score += 10;
         matchedCount += 2;
@@ -157,33 +157,32 @@ function checkMatch() {
 
         selected = [];
 
+        // All cards matched
         if (matchedCount === totalCards) {
-            winSound.currentTime = 0;
-            winSound.play();
+            if (winSound) {
+                winSound.currentTime = 0;
+                winSound.play();
+            }
 
             message.textContent = "🎉 Level Complete!";
             message.classList.remove("hidden");
             clearInterval(interval);
-        } 
-
-
+        }
     } else {
-
-        wrongSound.currentTime = 0;
-        wrongSound.play();
+        if (wrongSound) {
+            wrongSound.currentTime = 0;
+            wrongSound.play();
+        }
 
         setTimeout(() => {
             c1.classList.remove("flipped");
             c2.classList.remove("flipped");
-
             selected = [];
         }, 700);
     }
 }
 
-
-            // TIMER
-
+// TIMER
 function startTimer() {
     clearInterval(interval);
 
@@ -201,9 +200,7 @@ function startTimer() {
     }, 1000);
 }
 
-
-            // SHUFFLE
-
+// SHUFFLE
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -212,18 +209,18 @@ function shuffle(array) {
     return array;
 }
 
-
-            // CONTROLS
+// CONTROLS
 pauseBtn.onclick = () => {
     isPaused = !isPaused;
     pauseBtn.textContent = isPaused ? "Resume" : "Pause";
 };
 
 restartBtn.onclick = () => {
-    startGame("easy");
+    startGame(currentLevel); // 🔹 same level se restart
 };
 
 backBtn.onclick = () => {
+    clearInterval(interval);         // 🔹 timer stop
     gameScreen.classList.add("hidden");
     levelScreen.classList.remove("hidden");
 };
