@@ -40,9 +40,8 @@ body {
   display: none;
 }
 
-/* ------------------------------
-   HEADINGS
---------------------------------*/
+
+   /* HEADINGS  */
 h1, h2 {
   margin-bottom: 20px;
   font-weight: 600;
