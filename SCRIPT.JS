@@ -28,7 +28,7 @@ let selected = [];
 let matchedCount = 0;
 let totalCards = 6;
 let isPaused = false;
-let currentLevel = "easy"; // 🔹 last selected level remember
+let currentLevel = "easy"; //  last selected level remember
 
 // Level configuration (TOTAL CARDS)
 const levelConfig = {
@@ -216,11 +216,11 @@ pauseBtn.onclick = () => {
 };
 
 restartBtn.onclick = () => {
-    startGame(currentLevel); // 🔹 same level se restart
+    startGame(currentLevel); //  same level se restart
 };
 
 backBtn.onclick = () => {
-    clearInterval(interval);         // 🔹 timer stop
+    clearInterval(interval);         //  timer stop
     gameScreen.classList.add("hidden");
     levelScreen.classList.remove("hidden");
 };
