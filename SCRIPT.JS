@@ -122,7 +122,7 @@ function createBoard(total) {
 // FLIP CARD
 function flipCard(card) {
     if (isPaused) return;
-    if (timer <= 0) return; // 🔹 time over pe flip mat karo
+    if (timer <= 0) return; //  time over pe flip mat karo
     if (selected.length >= 2) return;
     if (card.classList.contains("flipped")) return;
 
