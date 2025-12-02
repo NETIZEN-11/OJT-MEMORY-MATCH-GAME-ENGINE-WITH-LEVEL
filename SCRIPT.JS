@@ -52,7 +52,7 @@ document.querySelectorAll(".level").forEach(btn => {
 
 // START GAME
 function startGame(level) {
-    currentLevel = level; // 🔹 store current level
+    currentLevel = level; //  store current level
     resetGame();
     levelScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
@@ -91,7 +91,7 @@ function createBoard(total) {
 
     const shuffled = shuffle(arr);
 
-    // 🔹 FIXED GRID (no weird sqrt)
+    //  FIXED GRID (no weird sqrt)
     let cols;
     if (total === 6) cols = 3;       // 3 x 2
     else if (total === 12) cols = 4; // 4 x 3
